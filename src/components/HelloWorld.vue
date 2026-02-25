@@ -8,7 +8,7 @@
       />
 
       <div class="mb-8 text-center">
-        <div class="text-body-2 font-weight-light mb-n1">Welcome to</div>
+        <div class="text-body-2 font-weight-light mb-n1">beaudry</div>
         <h1 class="text-h2 my-0 font-weight-bold">Vuetify test</h1>
       </div>
 
