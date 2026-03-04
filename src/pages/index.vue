@@ -14,7 +14,12 @@
       </v-btn>
     </div>
 
-    <ListMedicaments :medicaments="medicaments" @supprimer="supprimerMedicament" />
+    <ListMedicaments
+      :medicaments="medicaments"
+      @supprimer="supprimerMedicament"
+      @livrer="livrerMedicament"
+      @dispenser="dispenserMedicament"
+    />
 
     <MedicamentForm
       v-model="dialogOuvert"
@@ -39,7 +44,7 @@
 
 <script setup>
   import { ref, onMounted } from 'vue'
-  import { fetchMedicaments, deleteMedicament } from '../services/medicamentService'
+  import { fetchMedicaments, deleteMedicament, patchMedicamentQuantite } from '../services/medicamentService'
   import ListMedicaments from '../components/ListMedicaments.vue'
   import MedicamentForm from '../components/MedicamentForm.vue'
 
@@ -58,6 +63,19 @@
 
   async function supprimerMedicament (reference) {
     await deleteMedicament(reference)
+    chargerMedicaments(pageActuelle.value)
+  }
+
+  async function livrerMedicament (reference) {
+    const med = medicaments.value.find(m => m.reference === reference)
+    await patchMedicamentQuantite(reference, med.unitesEnStock + 1)
+    chargerMedicaments(pageActuelle.value)
+  }
+
+  async function dispenserMedicament (reference) {
+    const med = medicaments.value.find(m => m.reference === reference)
+    if (med.unitesEnStock <= 0) return
+    await patchMedicamentQuantite(reference, med.unitesEnStock - 1)
     chargerMedicaments(pageActuelle.value)
   }
 

@@ -15,6 +15,8 @@
         :key="med.reference"
         :medicament="med"
         @supprimer="$emit('supprimer', $event)"
+        @livrer="$emit('livrer', $event)"
+        @dispenser="$emit('dispenser', $event)"
       />
     </tbody>
   </v-table>
@@ -23,7 +25,7 @@
 <script setup>
   import MedicamentRow from './MedicamentRow.vue'
 
-  defineEmits(['supprimer'])
+  defineEmits(['supprimer', 'livrer', 'dispenser'])
 
   defineProps({
     medicaments: {

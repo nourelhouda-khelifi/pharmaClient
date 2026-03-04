@@ -30,6 +30,16 @@ export async function deleteMedicament (reference) {
   if (!res.ok) throw new Error('Failed to delete medicament')
 }
 
+export async function patchMedicamentQuantite (reference, unitesEnStock) {
+  const res = await fetch(`${BASE_URL}/medicaments/${reference}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ unitesEnStock }),
+  })
+  if (!res.ok) throw new Error('Failed to update medicament stock')
+  return res.json()
+}
+
 export async function createMedicament (medicament) {
   console.log('POST body:', JSON.stringify(medicament, null, 2))
   const res = await fetch(`${BASE_URL}/medicaments`, {

@@ -7,9 +7,9 @@
     </td>
     <td>
       <div class="d-flex align-center ga-2">
-        <v-btn icon="mdi-minus" size="small" variant="outlined" density="compact" />
+        <v-btn icon="mdi-minus" size="small" variant="outlined" density="compact" @click="$emit('dispenser', medicament.reference)" />
         <span class="font-weight-medium">{{ medicament.unitesEnStock }}</span>
-        <v-btn icon="mdi-plus" size="small" variant="outlined" density="compact" />
+        <v-btn icon="mdi-plus" size="small" variant="outlined" density="compact" @click="$emit('livrer', medicament.reference)" />
       </div>
     </td>
     <td>
@@ -44,7 +44,7 @@
 </style>
 
 <script setup>
-  const emit = defineEmits(['supprimer'])
+  const emit = defineEmits(['supprimer', 'livrer', 'dispenser'])
 
   const props = defineProps({
     medicament: {
