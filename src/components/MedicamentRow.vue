@@ -2,8 +2,8 @@
   <tr class="row-contour">
     <td class="td-first">{{ medicament.reference }}</td>
     <td>
-      <div class="font-weight-medium">{{ medicament.nom }}</div>
-      <div class="text-caption text-grey">{{ medicament.quantiteParUnite }}</div>
+      <div class="font-weight-medium">{{ medicament.nom }} </div>
+      <div class="subtitle">{{ medicament.quantiteParUnite }}</div>
     </td>
     <td>
       <div class="d-flex align-center ga-2">
