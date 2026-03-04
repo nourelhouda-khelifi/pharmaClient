@@ -23,7 +23,7 @@
     </td>
     <td class="td-last">
       <v-btn icon="mdi-pencil" size="small" color="blue" variant="tonal" class="mr-1" />
-      <v-btn icon="mdi-delete" size="small" color="red" variant="tonal" />
+      <v-btn icon="mdi-delete" size="small" color="red" variant="tonal" @click="confirmerSuppression" />
     </td>
   </tr>
 </template>
@@ -44,10 +44,17 @@
 </style>
 
 <script setup>
-  defineProps({
+  const emit = defineEmits(['supprimer'])
+
+  const props = defineProps({
     medicament: {
       type: Object,
       required: true,
     },
   })
+
+  function confirmerSuppression () {
+    const ok = window.confirm(`Voulez-vous vraiment supprimer "${props.medicament.nom}" ?`)
+    if (ok) emit('supprimer', props.medicament.reference)
+  }
 </script>

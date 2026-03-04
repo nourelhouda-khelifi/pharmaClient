@@ -14,7 +14,7 @@
       </v-btn>
     </div>
 
-    <ListMedicaments :medicaments="medicaments" />
+    <ListMedicaments :medicaments="medicaments" @supprimer="supprimerMedicament" />
 
     <MedicamentForm
       v-model="dialogOuvert"
@@ -39,7 +39,7 @@
 
 <script setup>
   import { ref, onMounted } from 'vue'
-  import { fetchMedicaments } from '../services/medicamentService'
+  import { fetchMedicaments, deleteMedicament } from '../services/medicamentService'
   import ListMedicaments from '../components/ListMedicaments.vue'
   import MedicamentForm from '../components/MedicamentForm.vue'
 
@@ -54,6 +54,11 @@
     medicaments.value = data
     totalPages.value = nbPages
     totalElements.value = nbElements
+  }
+
+  async function supprimerMedicament (reference) {
+    await deleteMedicament(reference)
+    chargerMedicaments(pageActuelle.value)
   }
 
   function changerPage (page) {

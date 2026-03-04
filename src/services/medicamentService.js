@@ -25,6 +25,11 @@ export async function fetchMedicaments (page = 0, size = 20, sort = 'nom') {
   }
 }
 
+export async function deleteMedicament (reference) {
+  const res = await fetch(`${BASE_URL}/medicaments/${reference}`, { method: 'DELETE' })
+  if (!res.ok) throw new Error('Failed to delete medicament')
+}
+
 export async function createMedicament (medicament) {
   console.log('POST body:', JSON.stringify(medicament, null, 2))
   const res = await fetch(`${BASE_URL}/medicaments`, {
