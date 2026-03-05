@@ -14,11 +14,20 @@
       </v-btn>
     </div>
 
+    <FormTexte v-model="motcle" class="mb-4" />
+
     <ListMedicaments
       :medicaments="medicaments"
       @supprimer="supprimerMedicament"
       @livrer="livrerMedicament"
       @dispenser="dispenserMedicament"
+      @modifier="ouvrirSidebar"
+    />
+
+    <MedicamentSidebar
+      v-model="sidebarOuverte"
+      :medicament="medicamentActif"
+      @medicament-modifie="chargerMedicaments(pageActuelle)"
     />
 
     <MedicamentForm
@@ -26,7 +35,7 @@
       @medicament-ajoute="chargerMedicaments(pageActuelle)"
     />
 
-    <div class="d-flex justify-center align-center mt-4 ga-4">
+    <div v-if="!motcle" class="d-flex justify-center align-center mt-4 ga-4">
       <span class="text-body-2 text-grey">
         Page {{ pageActuelle }} / {{ totalPages }} ({{ totalElements }} éléments)
       </span>
@@ -38,21 +47,34 @@
         @update:model-value="changerPage"
       />
     </div>
+    <div v-else class="text-body-2 text-grey mt-4 text-center">
+      {{ medicaments.length }} résultat(s) pour « {{ motcle }} »
+    </div>
 
   </v-container>
 </template>
 
 <script setup>
-  import { ref, onMounted } from 'vue'
-  import { fetchMedicaments, deleteMedicament, patchMedicamentQuantite } from '../services/medicamentService'
+  import { ref, onMounted, watch } from 'vue'
+  import { fetchMedicaments, deleteMedicament, patchMedicamentQuantite, searchMedicaments } from '../services/medicamentService'
   import ListMedicaments from '../components/ListMedicaments.vue'
   import MedicamentForm from '../components/MedicamentForm.vue'
+  import MedicamentSidebar from '../components/MedicamentSidebar.vue'
+  import FormTexte from '../components/FormTexte.vue'
 
   const medicaments = ref([])
   const pageActuelle = ref(1)
   const totalPages = ref(1)
   const totalElements = ref(0)
   const dialogOuvert = ref(false)
+  const sidebarOuverte = ref(false)
+  const medicamentActif = ref(null)
+  const motcle = ref('')
+
+  function ouvrirSidebar (medicament) {
+    medicamentActif.value = medicament
+    sidebarOuverte.value = true
+  }
 
   async function chargerMedicaments (page) {
     const { medicaments: data, totalPages: nbPages, totalElements: nbElements } = await fetchMedicaments(page - 1)
@@ -82,6 +104,14 @@
   function changerPage (page) {
     chargerMedicaments(page)
   }
+
+  watch(motcle, async (val) => {
+    if (val && val.trim()) {
+      medicaments.value = await searchMedicaments(val.trim())
+    } else {
+      chargerMedicaments(pageActuelle.value)
+    }
+  })
 
   onMounted(() => {
     chargerMedicaments(pageActuelle.value)

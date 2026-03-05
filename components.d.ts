@@ -13,10 +13,12 @@ declare module 'vue' {
   export interface GlobalComponents {
     AppFooter: typeof import('./src/components/AppFooter.vue')['default']
     AppHeader: typeof import('./src/components/AppHeader.vue')['default']
+    FormTexte: typeof import('./src/components/FormTexte.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     ListMedicaments: typeof import('./src/components/ListMedicaments.vue')['default']
     MedicamentForm: typeof import('./src/components/MedicamentForm.vue')['default']
     MedicamentRow: typeof import('./src/components/MedicamentRow.vue')['default']
+    MedicamentSidebar: typeof import('./src/components/MedicamentSidebar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

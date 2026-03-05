@@ -17,6 +17,7 @@
         @supprimer="$emit('supprimer', $event)"
         @livrer="$emit('livrer', $event)"
         @dispenser="$emit('dispenser', $event)"
+        @modifier="$emit('modifier', $event)"
       />
     </tbody>
   </v-table>
@@ -25,7 +26,7 @@
 <script setup>
   import MedicamentRow from './MedicamentRow.vue'
 
-  defineEmits(['supprimer', 'livrer', 'dispenser'])
+  defineEmits(['supprimer', 'livrer', 'dispenser', 'modifier'])
 
   defineProps({
     medicaments: {

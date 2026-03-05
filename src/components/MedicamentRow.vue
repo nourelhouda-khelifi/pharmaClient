@@ -22,7 +22,7 @@
       />
     </td>
     <td class="td-last">
-      <v-btn icon="mdi-pencil" size="small" color="blue" variant="tonal" class="mr-1" />
+      <v-btn icon="mdi-pencil" size="small" color="blue" variant="tonal" class="mr-1" @click="$emit('modifier', medicament)" />
       <v-btn icon="mdi-delete" size="small" color="red" variant="tonal" @click="confirmerSuppression" />
     </td>
   </tr>
@@ -44,7 +44,7 @@
 </style>
 
 <script setup>
-  const emit = defineEmits(['supprimer', 'livrer', 'dispenser'])
+  const emit = defineEmits(['supprimer', 'livrer', 'dispenser', 'modifier'])
 
   const props = defineProps({
     medicament: {

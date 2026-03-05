@@ -1,4 +1,4 @@
-import { fetchCategorieByReference } from '../services/medicamentService'
+import { getCodeCategoriesByReference } from '../services/medicamentService'
 
 const BASE_URL = 'https://pharma-server-k88v.onrender.com/api'
 
@@ -71,7 +71,7 @@ export class Medicament {
 
   async loadCategorieCode () {
     if (this._categorie != null || this._reference == null) return
-    const data = await fetchCategorieByReference(this._reference)
+      const data = await getCodeCategoriesByReference(this._reference)
     this._categorie = data.code
   }
 
